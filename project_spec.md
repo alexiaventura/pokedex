@@ -85,7 +85,7 @@ Required Feature
 ## Wireframes
 
 <!-- Add picture of your hand sketched wireframes in this section -->
-<img src="![wireframes.png](app/src/main/res/drawable/wireframes.png)" width=600>
+<img src="app/src/main/res/drawable/wireframes.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
