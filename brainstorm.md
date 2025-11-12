@@ -1,8 +1,3 @@
----
-title: Brainstorm
-
----
-
 ### Brainstorm Ideas
 1. pokedex
     Looks up pokemon data
