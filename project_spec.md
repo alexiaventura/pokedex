@@ -1,8 +1,3 @@
----
-title: Untitled
-
----
-
 # **Pokedex_API**
 
 ## Table of Contents
