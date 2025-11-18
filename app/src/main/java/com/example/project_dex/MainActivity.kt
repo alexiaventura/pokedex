@@ -85,7 +85,8 @@ data class LocationAreaResource(
 
 @Serializable
 data class LocationDetails(
-    val areas: List<LocationAreaResource>
+    val areas: List<LocationAreaResource>,
+    val region: ApiResource?
 )
 
 class MainActivity : ComponentActivity() {
@@ -215,13 +216,43 @@ fun MenuCard(title: String, onClick: () -> Unit) {
     }
 }
 
+// LOCATION data
+@Composable
+fun LocationInfoCard(locationName: String, regionName: String?, pokemonCount: Int) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = locationName.replaceFirstChar { it.titlecase() },
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            if (regionName != null) {
+                Text(
+                    text = "Region: ${regionName.replaceFirstChar { it.titlecase() }}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            Text(
+                text = "Pokémon Species: $pokemonCount",
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
 @Composable
 fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onPokemonSelected: (String) -> Unit) {
     var pokemonList by remember { mutableStateOf<List<ApiResource>>(emptyList()) }
+    var locationDetails by remember { mutableStateOf<LocationDetails?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     val json = Json { ignoreUnknownKeys = true }
 
-    // ... (The LaunchedEffect logic remains the same)
     LaunchedEffect(locationUrl) {
         isLoading = true
         val client = AsyncHttpClient()
@@ -229,8 +260,8 @@ fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onP
         // Step 1: Fetch the Location to get the Location-Area URL
         client.get(locationUrl, object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers, jsonResponse: JSON) {
-                val locationDetails = json.decodeFromString<LocationDetails>(jsonResponse.jsonObject.toString())
-                val areaUrl = locationDetails.areas.firstOrNull()?.url
+                locationDetails = json.decodeFromString<LocationDetails>(jsonResponse.jsonObject.toString())
+                val areaUrl = locationDetails?.areas?.firstOrNull()?.url
 
                 if (areaUrl != null) {
                     // Step 2: Fetch the Location-Area using the URL from Step 1
@@ -269,6 +300,15 @@ fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onP
         Text("No Pokémon found in this area.", modifier = modifier.padding(16.dp))
     } else {
         LazyColumn(modifier = modifier) {
+            item {
+                locationDetails?.let {
+                    LocationInfoCard(
+                        locationName = it.areas.first().name, // Use area name for more specific title
+                        regionName = it.region?.name,
+                        pokemonCount = pokemonList.size
+                    )
+                }
+            }
             items(pokemonList) { pokemon ->
                 // Replace the old ListItem with this Button
                 Button(
