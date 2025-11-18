@@ -2,6 +2,7 @@ package com.example.project_dex
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,10 @@ import com.example.project_dex.network.PagedResponse
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import java.util.Locale
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
 
 // --- VIEWMODEL and UI STATE ---
 // Placed inside the same file as the UI that uses it.
@@ -90,7 +95,7 @@ fun ListingScreen(
     resourceType: String, // e.g., "pokemon", "move"
     searchHint: String,
     modifier: Modifier = Modifier,
-    onPokemonSelected: (String) -> Unit, // New parameter for Pokemon selection
+    onResourceSelected: (String) -> Unit,
     listingViewModel: ListingViewModel = viewModel()
 ) {
     // Trigger the data fetch when the screen is first composed.
@@ -107,38 +112,62 @@ fun ListingScreen(
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text(searchHint) },
-            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
 
+        // 2. HANDLE UI STATES (Loading, Error, Success)
         when (uiState) {
-            is ListUiState.Loading -> Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) { CircularProgressIndicator() }
-
-            is ListUiState.Error -> Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) { Text("Failed to load data.") }
-
+            is ListUiState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            is ListUiState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Failed to load data. Please try again.")
+                }
+            }
             is ListUiState.Success -> {
-                LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    val filteredItems =
-                        uiState.items.filter { it.name.contains(searchQuery, ignoreCase = true) }
+                // 3. DEFINE filteredItems inside the Success state
+                val filteredItems = uiState.items.filter {
+                    it.name.contains(searchQuery, ignoreCase = true)
+                }
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(filteredItems) { item ->
-                        Text(
-                            text = item.name.replaceFirstChar {
-                                if (it.isLowerCase()) it.titlecase(
-                                    Locale.ROOT
-                                ) else it.toString()
-                            },
+                        val id = item.url.split("/").dropLast(1).last()
+                        Button(
+                            onClick = { onResourceSelected(item.url) },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 12.dp)
-                        )
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = item.name.replaceFirstChar { it.titlecase() },
+                                    modifier = Modifier.weight(1f) // Text takes up available space
+                                )
+                                // Show the ID only for Pokémon
+                                if (resourceType == "pokemon") {
+                                    Text(text = "ID: $id")
+                                }
+                            }
+                        }
                     }
                 }
             }
