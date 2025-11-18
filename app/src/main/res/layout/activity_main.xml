@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pokedex Main Menu"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnPokedexListing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pokedex Listing"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnMovesListing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moves Listing"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnAbilities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Abilities"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnPokemonTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pokemon Types"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btnPokemonLocations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pokemon Locations"/>
+
+</LinearLayout>
