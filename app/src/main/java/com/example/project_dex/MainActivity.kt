@@ -270,7 +270,7 @@ fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onP
     } else {
         LazyColumn(modifier = modifier) {
             items(pokemonList) { pokemon ->
-                // The new Button composable
+                // Replace the old ListItem with this Button
                 Button(
                     onClick = { onPokemonSelected(pokemon.url) },
                     modifier = Modifier
@@ -278,8 +278,8 @@ fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onP
                         .padding(horizontal = 16.dp, vertical = 4.dp),
                     // Use transparent background to mimic a list item
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = MaterialTheme.colorScheme.onSurface
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 ) {
                     // This Row will arrange the sprite and the name
@@ -294,8 +294,9 @@ fun LocationDetailScreen(locationUrl: String, modifier: Modifier = Modifier, onP
                         AsyncImage(
                             model = spriteUrl,
                             contentDescription = "${pokemon.name} sprite",
-                            modifier = Modifier.size(56.dp) // Slightly smaller for better fit
+                            modifier = Modifier.size(56.dp) // Adjust size as needed
                         )
+
                         // Pokémon Name
                         Text(
                             text = pokemon.name.replaceFirstChar { it.titlecase() },
@@ -378,19 +379,31 @@ fun ListingScreen(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(filteredItems) { item ->
                 val id = item.url.split("/").dropLast(1).last()
-                ListItem(
-                    headlineContent = { Text(item.name.replaceFirstChar { it.titlecase() }) },
-                    // Show the ID only for Pokémon
-                    supportingContent = if (resourceType == "pokemon") {
-                        { Text("ID: $id") }
-                    } else {
-                        null
-                    },
-                    modifier = Modifier.clickable {
-                        // Pass the URL of the clicked item, regardless of type
-                        onResourceSelected(item.url)
+                // Replace ListItem with a styled Button
+                Button(
+                    onClick = { onResourceSelected(item.url) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant, // Use the same gray
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant  // And same content color
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = item.name.replaceFirstChar { it.titlecase() },
+                            modifier = Modifier.weight(1f) // Text takes up available space
+                        )
+                        // Show the ID only for Pokémon
+                        if (resourceType == "pokemon") {
+                            Text(text = "ID: $id")
+                        }
                     }
-                )
+                }
             }
         }
     }

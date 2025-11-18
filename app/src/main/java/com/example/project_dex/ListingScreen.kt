@@ -143,25 +143,26 @@ fun ListingScreen(
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(filteredItems) { item ->
+                        val id = item.url.split("/").dropLast(1).last()
                         Button(
-                            onClick = { onResourceSelected(item.url) }, // Now resolved
+                            onClick = { onResourceSelected(item.url) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 4.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = MaterialTheme.colorScheme.onSurface
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                val id = item.url.split("/").dropLast(1).last()
                                 Text(
-                                    text = item.name.replaceFirstChar { it.titlecase(Locale.getDefault()) },
-                                    modifier = Modifier.weight(1f)
+                                    text = item.name.replaceFirstChar { it.titlecase() },
+                                    modifier = Modifier.weight(1f) // Text takes up available space
                                 )
+                                // Show the ID only for Pokémon
                                 if (resourceType == "pokemon") {
                                     Text(text = "ID: $id")
                                 }
