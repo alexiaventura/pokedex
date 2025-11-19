@@ -38,9 +38,9 @@ Required Features:
 
 Stretch Features:
 
-- [ ] Moves available in the pokemon games
+- [ ] Pokemon Moves
 - [x] Pokemon types
-- [ ] abilites
+- [ ] Pokemon abilities
 
 ### 2. Chosen API(s)
 
