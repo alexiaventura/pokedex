@@ -1,6 +1,6 @@
 package com.example.project_dex
 import kotlinx.serialization.Serializable
-
+//.
 @Serializable
 data class PokemonDetails(
     val id: Int,
