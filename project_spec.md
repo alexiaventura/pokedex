@@ -70,6 +70,12 @@ We needed far more than a week to complete this project. Our schedules are too p
 
 For Milestone 2, include **2+ Videos/GIFs** of the build process here!
 
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/6iX5ecv" data-context="false" ><a href="//imgur.com/a/6iX5ecv">Locations and other Unimplemented menus</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/SvMKF7a" data-context="false" ><a href="//imgur.com/a/SvMKF7a">PokemonList</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+
+
 ## License
 
 Copyright 2025 **Group 10 CodePath**

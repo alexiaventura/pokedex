@@ -6,14 +6,14 @@ Submitted by:
 - **Diego**
 - **Alexia**
 - **Juan**
-- **Kene**
+- **Ekene**
 - **Chinyemba**
 
-Time spent: **X** hours spent in total
+Time spent: **8** hours spent in total
 
 ## Summary
 
-This document provides a summary of our project building process for our app, **App Name Here**
+This document provides a summary of our project building process for our app, **Pokedex**
 
 ## Milestone Requirements
 
@@ -26,14 +26,16 @@ The following REQUIRED features are completed:
 
 The following REQUIRED files are included:
 
-- [ ] Updated 📄 `project_spec.md`, which contains:
+- [x] Updated 📄 `project_spec.md`, which contains:
     - [X] App Overview (Milestone 1)
     - [X] App Spec (Milestone 1)
-    - [ ] Checked off 2+ completed features
-    - [ ] 2+ Videos/GIFs of build progress
+    - [x] Checked off 2+ completed features
+    - [x] 2+ Videos/GIFs of build progress
 
-- [ ] Our 🎥 Demo Video
+- [x] Our 🎥 Demo Video
     - [ ] We have also added the Demo Video Link to the Group Info Form on the course portal.
+
+![Video Demo](VideoDemoPokedex.gif)
 
 The following EXTRA features are implemented:
 
